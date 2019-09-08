@@ -1,5 +1,5 @@
 // THIS SCRIPT WAS WRITTEN FOR REWIND GAMING BY BUCKETMAN. ANY USE FOR OTHER PURPOSES
-// IS NOT PERMITTED WITHOUT PRIOR PERMISSION, WHICH WILL NOT BE WITHHELD UNREASONABLY.
+// IS NOT PERMITTED WITHOUT PRIOR WRITTEN PERMISSION.
 
 class GraphicsUpdater {
     /**
@@ -12,6 +12,9 @@ class GraphicsUpdater {
         this.settings = settings;
         this.url = "https://spreadsheets.google.com/feeds/cells/" + ssId + "/1/public/full?alt=json";
         this.keys = {};
+
+        // make interval default to 2 seconds if none specified
+        interval = interval || 2000;
 
         for (let i of Object.keys(settings)) {
             this.keys[i] = Object.keys(settings[i]);
