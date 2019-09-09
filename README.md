@@ -95,7 +95,7 @@ In this example, the updater script would show the first `n` elements in the lis
 &nbsp;
 
 ##### `"switch"`
-A switch is the last element type, designed to show different things depending on, as well as to allow you to do a lot of other things that aren't natively supported by the updater system. It basically allows you to specify a list of possible values for each spreadsheet cell, with an element ID given for each possible value. The script will show any elements given for the current cell value, and hide the elements affiliated with all other values.
+A switch is the last element type, designed to show different elements depending on a cell's value, as well as to allow you to do a lot of other things that aren't natively supported by the updater system. It basically allows you to specify a list of possible values for each spreadsheet cell, with an element ID given for each possible value. The script will show any elements given for the current cell value, and hide the elements affiliated with all other values.
 
 A `settings` structure using `"switch"` might look like:
 ```json
