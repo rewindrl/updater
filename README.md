@@ -35,7 +35,7 @@ I'm defining an element type here as a type of thing that can be updated in the 
 A string property simply replaces the content of the given HTML ID(s) with the content of the spreadsheet cell. It is useful for text content such as team names, social media tags or the name of your epic mixtape.
 
 A `settings` structure using `"string"` might look like:
-```js
+```json
 {
     "string": {
         "H6": "team-name-1",
@@ -55,7 +55,7 @@ In this example, `#team-name-1` and `#moderator-of-the-month` would be updated w
 An image element has its `src` attribute set to whatever text content is contained inside the given cell. This URI can point to a file stored locally on the broadcast machine, or an image that's hosted on the web. This can be useful for any dynamic image you'd want to display, from a caster's profile photo to your meme of the day.
 
 A `settings` structure using `"image"` might look like:
-```js
+```json
 {
     "image": {
         "F5": "metal-bucket",
@@ -99,7 +99,7 @@ A switch is the last element type, designed to show different things depending o
 
 A `settings` structure using `"switch"` might look like:
 ```js
-{
+let settings = {
     "switch": {
         "Z14": {
             "bob": "bob-overlay",
