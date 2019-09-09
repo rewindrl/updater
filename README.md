@@ -35,7 +35,7 @@ I'm defining an element type here as a type of thing that can be updated in the 
 A string property simply replaces the content of the given HTML ID(s) with the content of the spreadsheet cell. It is useful for text content such as team names, social media tags or the name of your epic mixtape.
 
 A `settings` structure using `"string"` might look like:
-```json
+```js
 {
     "string": {
         "H6": "team-name-1",
@@ -55,7 +55,7 @@ In this example, `#team-name-1` and `#moderator-of-the-month` would be updated w
 An image element has its `src` attribute set to whatever text content is contained inside the given cell. This URI can point to a file stored locally on the broadcast machine, or an image that's hosted on the web. This can be useful for any dynamic image you'd want to display, from a caster's profile photo to your meme of the day.
 
 A `settings` structure using `"image"` might look like:
-```json
+```js
 {
     "image": {
         "F5": "metal-bucket",
@@ -78,7 +78,7 @@ Fun fact: `"image"` can also be used to specify sources for other tags that use 
 The `"counter"` element type is a specialised type designed for use with overlays using 'tallies' to display scores. It will reveal or hide elements in a given ID list based on a number given in a single cell in the spreadsheet. For example, for a given score of 2, it will show the first two elements and hide any later elements in the list.
 
 A `settings` structure using `"counter"` might look like:
-```json
+```js
 {
     "counter": {
         "B2": [
@@ -98,7 +98,7 @@ In this example, the updater script would show the first `n` elements in the lis
 A switch is the last element type, designed to show different things depending on, as well as to allow you to do a lot of other things that aren't natively supported by the updater system. It basically allows you to specify a list of possible values for each spreadsheet cell, with an element ID given for each possible value. The script will show any elements given for the current cell value, and hide the elements affiliated with all other values.
 
 A `settings` structure using `"switch"` might look like:
-```json
+```js
 {
     "switch": {
         "Z14": {
@@ -110,4 +110,4 @@ A `settings` structure using `"switch"` might look like:
     }
 }
 ```
-In this example, the value in Z14 would decide which of `#bob-overlay`, `#cartoon-bucket-drawing`, `#doris-esports` and `#linda-overlay` to show. If Z14 contained 'bob', the HTML element with ID `#bob-overlay` would be shown, if it contained 'bucket' it would show `#cartoon-bucket-drawing` and so on.
+In this example, the value in Z14 would decide which of `#bob-overlay`, `#cartoon-bucket-drawing`, `#doris-esports` and `#linda-overlay` to show. If Z14 contained 'bob', the HTML element with ID `#bob-overlay` would be shown, if it contained 'bucket' it would show `#cartoon-bucket-drawing` and so on. Note that you can't specify multiple tags for a value in a switch statement: if you want to be able to toggle several different things, you could either use containing HTML divs that you pass into the updater instead or, in a similar vein to the counter, specify the same cell multiple times. Again, not strictly supported.
