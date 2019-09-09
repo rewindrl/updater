@@ -78,7 +78,7 @@ Fun fact: `"image"` can also be used to specify sources for other tags that use 
 The `"counter"` element type is a specialised type designed for use with overlays using 'tallies' to display scores. It will reveal or hide elements in a given ID list based on a number given in a single cell in the spreadsheet. For example, for a given score of 2, it will show the first two elements and hide any later elements in the list.
 
 A `settings` structure using `"counter"` might look like:
-```js
+```json
 {
     "counter": {
         "B2": [
@@ -98,8 +98,8 @@ In this example, the updater script would show the first `n` elements in the lis
 A switch is the last element type, designed to show different things depending on, as well as to allow you to do a lot of other things that aren't natively supported by the updater system. It basically allows you to specify a list of possible values for each spreadsheet cell, with an element ID given for each possible value. The script will show any elements given for the current cell value, and hide the elements affiliated with all other values.
 
 A `settings` structure using `"switch"` might look like:
-```js
-let settings = {
+```json
+{
     "switch": {
         "Z14": {
             "bob": "bob-overlay",
