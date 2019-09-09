@@ -21,7 +21,7 @@ Bear in mind that it may take more than the given time for an inputted value to 
 ### `spreadsheetId`
 This is the ID of the spreadsheet, as given in the URL of the Google Sheets page for that spreadsheet. It's usually a 44-character string.
 
-Bear in mind that the spreadsheet has to be public before it's visible to the API that the updater uses. Just setting it to 'anyone with the link can view' isn't enough - you have to **publish** it. You can do this by paying a visit to `File -> Publish to the web` on the desktop web UI and making sure that the checkbox marked `Automatically republish when changes are made` is ticked.
+Bear in mind that the spreadsheet has to be public before it's visible to the API that the updater uses. Just setting it to 'anyone with the link can view' isn't enough - you have to **publish** it. You can do this by paying a visit to `File -> Publish to the web` on the desktop web UI, making sure that the checkbox marked `Automatically republish when changes are made` is ticked and hitting `Start publishing`.
 
 *note: I don't know how different sheets on the same document work; I think it just uses the first sheet from the document but I need to look into it properly*
 
