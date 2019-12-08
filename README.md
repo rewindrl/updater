@@ -8,13 +8,45 @@ It is designed to be included inside a set of HTML overlays to be imported into 
 When using this system, the main latency bottleneck is Google's servers propagating new values to the API. Generally I've found that updates take 2-10 seconds to reach overlays, which is very much satisfactory for most broadcast needs.
 
 ## Basic Implementation
-To use Updater.js, simply import it into an overlay page and define a new `GraphicsUpdater` object.
+To use Updater.js, simply import it into an overlay page in a `<script>` tag and define a new `GraphicsUpdater` object. It doesn't require JQuery so can just be included as a standalone file.
 
-The `GraphicsUpdater` object is defined as below:
-```js
-let u = new GraphicsUpdater(settings, spreadsheetId, refreshInterval);
+For example:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- stuff -->
+</head>
+<body>
+    <p id="team-name"></p>
+    <img id="team-photo">
+
+    <!-- JAVASCRIPT STUFF -->
+    <!-- Import Updater -->
+    <script src="Updater.js"></script>
+    <script>
+        // Define settings to use
+        const settings = {
+            "string": {
+                "H1": "team-name"
+            },
+            "image": {
+                "H2": "team-photo"
+            }
+        };
+
+        // Define spreadsheet to use
+        const ss_id = "0B-klwLEjaXWcZHR5SmJJWEwtYnc";
+
+        // Pass those values into a new GraphicsUpdater object
+        // The code will deal with it from here
+        const u = new GraphicsUpdater(settings, ss_id, 3000);
+    </script>
+</body>
+</html>
 ```
-It can be given any variable name you want. You could even call it `bucket_is_a_thot` if you wanted.
+
+Updater.js and Updater.min.js both do exactly the same thing; Updater.min.js is just smaller ('minified') and so will take up less disk space and run marginally quicker, if you're not interested in how it works.
 
 ## Parameters
 I'm going to address the parameters in ascending order of how complicated they are to explain, so that it's easy to find simpler parameters.
