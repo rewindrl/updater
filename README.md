@@ -1,5 +1,11 @@
 # Updater.js
-The contents of this repository are currently property of Rewind Gaming ('RG'). If you want to use anything from this repository for a purpose that is not affiliated with RG, you must first obtain written permission from one of our Directors. We may change this in future.
+This repository contains code designed to be used in a broadcast situation, and provides a simple framework to allow a broadcast moderator to control overlays using a Google Sheet. It was created for [Rewind Gaming](https://twitter.com/RewindRL) by [Barnaby 'bucketman' Collins](https://twitter.com/bucketman21).
+
+It is designed to be included inside a set of HTML overlays to be imported into broadcasting software such as OBS, and runs entirely on the client side. An earlier version of this program was used by Rewind Gaming for all of our large events, and it has proven reliable.
+
+**Important notice:** It uses the [Google Sheets API v3](https://developers.google.com/sheets/api/v3) which is a legacy API and is unfortunately scheduled for deprecation on **03/03/2020**. I chose this API version because it can be used without authentication or API keys on public spreadsheets. I may update the program to work with a newer API at some point, but since Rewind Gaming no longer operates and I am a full-time student it won't be much of a priority for me.
+
+When using this system, the main latency bottleneck is Google's servers propagating new values to the API. Generally I've found that updates take 2-10 seconds to reach overlays, which is very much satisfactory for most broadcast needs.
 
 ## Basic Implementation
 To use Updater.js, simply import it into an overlay page and define a new `GraphicsUpdater` object.
@@ -16,14 +22,14 @@ I'm going to address the parameters in ascending order of how complicated they a
 ### `refreshInterval`
 This is simply the interval in milliseconds at which the updater should grab the latest info from the Google Sheet. For example, if `refreshInterval` is set to `3000`, the overlay will be updated every 3 seconds (3000 milliseconds).
 
-Bear in mind that it may take more than the given time for an inputted value to reach the overlay, given that it has to make the journey from writing client machine to Google Drive servers to API endpoint before it is visible to the script. For example, setting your interval to 1ms would be pointless because it takes much more than 1ms for the value to propagate to the API, by which time the script would have refreshed hundreds of times before getting the update.
+Bear in mind that it may take more than the given time for an inputted value to reach the overlay, given that it has to make the journey from writing client machine to Google Drive servers to API endpoint before it is visible to the script. For example, setting your interval to 1ms would be pointless because it takes much more than 1ms for the value to propagate to the API on Google's servers, by which time the script would have refreshed hundreds of times before getting the update. We've found that timings in the range of 2000-10000 are pretty reasonable values for this (as this is the typical time taken for Google Sheets to propagate).
 
 ### `spreadsheetId`
 This is the ID of the spreadsheet, as given in the URL of the Google Sheets page for that spreadsheet. It's usually a 44-character string.
 
 Bear in mind that the spreadsheet has to be public before it's visible to the API that the updater uses. Just setting it to 'anyone with the link can view' isn't enough - you have to **publish** it. You can do this by paying a visit to `File -> Publish to the web` on the desktop web UI, making sure that the checkbox marked `Automatically republish when changes are made` is ticked and hitting `Start publishing`.
 
-*note: I don't know how different sheets on the same document work; I think it just uses the first sheet from the document but I need to look into it properly*
+*note: I don't know how different sheets on the same document work; I think it just uses the first sheet from the document.*
 
 ### `settings`
 `settings` is defined as a JavaScript object. It defines the relationships between the cells in the spreadsheet and the HTML elements in the overlay.
