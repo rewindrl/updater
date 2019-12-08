@@ -1,6 +1,3 @@
-// THIS SCRIPT WAS WRITTEN FOR REWIND GAMING BY BUCKETMAN. ANY USE FOR OTHER PURPOSES
-// IS NOT PERMITTED WITHOUT PRIOR WRITTEN PERMISSION.
-
 class GraphicsUpdater {
     /**
      * Start updating given elements from the given spreadsheet
