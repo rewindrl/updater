@@ -8,7 +8,7 @@ class GraphicsUpdater {
      */
     constructor(settings, spreadsheetID, worksheetIndex=1, updateInterval=3000) {
         this.settings = settings;
-        this.url = $`https://spreadsheets.google.com/feeds/cells/${spreadsheetID}/${worksheetIndex}/public/full?alt=json`;
+        this.url = `https://spreadsheets.google.com/feeds/cells/${spreadsheetID}/${worksheetIndex}/public/full?alt=json`;
         this.keys = {};
 
         for (let i of Object.keys(settings)) {
