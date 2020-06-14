@@ -1,24 +1,22 @@
 class GraphicsUpdater {
     /**
      * Start updating given elements from the given spreadsheet
-     * @param {object} settings the set of cells and IDs that should be updated
-     * @param {string} ssId the ID of the spreadsheet
-     * @param {number} [interval=2000] the interval to update at (in milliseconds)
+     * @param {object} settings - The set of cells and IDs that should be updated
+     * @param {string} spreadsheetID - The ID of the spreadsheet
+     * @param {number} [worksheetIndex=1] - The index of the worksheet in the Google Sheet (1-indexed)
+     * @param {number} [updateInterval=3000] - The interval to update at (in milliseconds)
      */
-    constructor(settings, ssId, interval) {
+    constructor(settings, spreadsheetID, worksheetIndex=1, updateInterval=3000) {
         this.settings = settings;
-        this.url = "https://spreadsheets.google.com/feeds/cells/" + ssId + "/1/public/full?alt=json";
+        this.url = $`https://spreadsheets.google.com/feeds/cells/${spreadsheetID}/${worksheetIndex}/public/full?alt=json`;
         this.keys = {};
-
-        // make interval default to 2 seconds if none specified
-        interval = interval || 2000;
 
         for (let i of Object.keys(settings)) {
             this.keys[i] = Object.keys(settings[i]);
         }
 
         this.update();
-        setInterval(this.update.bind(this), interval);
+        setInterval(this.update.bind(this), updateInterval);
     }
 
     async update() {

@@ -36,11 +36,17 @@ For example:
         };
 
         // Define spreadsheet to use
-        const ss_id = "0B-klwLEjaXWcZHR5SmJJWEwtYnc";
+        const spreadsheetID = "0B-klwLEjaXWcZHR5SmJJWEwtYnc";
+
+        // Use the first worksheet in the document
+        const worksheetIndex = 1;
+
+        // Update the overlay every 3 seconds
+        const updateInterval = 3000;
 
         // Pass those values into a new GraphicsUpdater object
         // The code will deal with it from here
-        const u = new GraphicsUpdater(settings, ss_id, 3000);
+        const u = new GraphicsUpdater(settings, ssId, worksheetIndex, updateInterval);
     </script>
 </body>
 </html>
@@ -49,19 +55,15 @@ For example:
 Updater.js and Updater.min.js both do exactly the same thing; Updater.min.js is just smaller ('minified') and so will take up less disk space and run marginally quicker, if you're not interested in how it works.
 
 ## Parameters
-I'm going to address the parameters in ascending order of how complicated they are to explain, so that it's easy to find simpler parameters.
+In this section:
 
-### `refreshInterval`
-This is simply the interval in milliseconds at which the updater should grab the latest info from the Google Sheet. For example, if `refreshInterval` is set to `3000`, the overlay will be updated every 3 seconds (3000 milliseconds).
+`GraphicsUpdater(`
+- [`settings`](###-`settings`)`,`
+- [`spreadsheetID`](###-`spreadsheetID`)`,`
+- [`worksheetIndex`](###-`worksheetIndex`-(optional;-default-`1`))`,`
+- [`updateInterval`](###-`updateInterval`-(optional;-default-`3000`))
 
-Bear in mind that it may take more than the given time for an inputted value to reach the overlay, given that it has to make the journey from writing client machine to Google Drive servers to API endpoint before it is visible to the script. For example, setting your interval to 1ms would be pointless because it takes much more than 1ms for the value to propagate to the API on Google's servers, by which time the script would have refreshed hundreds of times before getting the update. We've found that timings in the range of 2000-10000 are pretty reasonable values for this (as this is the typical time taken for Google Sheets to propagate).
-
-### `spreadsheetId`
-This is the ID of the spreadsheet, as given in the URL of the Google Sheets page for that spreadsheet. It's usually a 44-character string.
-
-Bear in mind that the spreadsheet has to be public before it's visible to the API that the updater uses. Just setting it to 'anyone with the link can view' isn't enough - you have to **publish** it. You can do this by paying a visit to `File -> Publish to the web` on the desktop web UI, making sure that the checkbox marked `Automatically republish when changes are made` is ticked and hitting `Start publishing`.
-
-*note: I don't know how different sheets on the same document work; I think it just uses the first sheet from the document.*
+)
 
 ### `settings`
 `settings` is defined as a JavaScript object. It defines the relationships between the cells in the spreadsheet and the HTML elements in the overlay.
@@ -149,3 +151,18 @@ A `settings` structure using `"switch"` might look like:
 }
 ```
 In this example, the value in Z14 would decide which of `#bob-overlay`, `#cartoon-bucket-drawing`, `#doris-esports` and `#linda-overlay` to show. If Z14 contained 'bob', the HTML element with ID `#bob-overlay` would be shown, if it contained 'bucket' it would show `#cartoon-bucket-drawing` and so on. Note that you can't specify multiple tags for a value in a switch statement: if you want to be able to toggle several different things, you could either use containing HTML divs that you pass into the updater instead or, in a similar vein to the counter, specify the same cell multiple times. Again, not strictly supported.
+
+### `spreadsheetID`
+This is the ID of the spreadsheet, as given in the URL of the Google Sheets page for that spreadsheet. It's usually a 44-character string.
+
+Bear in mind that the spreadsheet has to be public before it's visible to the API that the updater uses. Just setting it to 'anyone with the link can view' isn't enough - you have to **publish** it. You can do this by paying a visit to `File -> Publish to the web` on the desktop web UI, making sure that the checkbox marked `Automatically republish when changes are made` is ticked and hitting `Start publishing`.
+
+### `worksheetIndex` (optional; default `1`)
+This is the index of the worksheet inside the spreadsheet document (ie, a number corresponding to the tab along the bottom that you'd click to get to that worksheet in the desktop web UI).
+
+**Important: It is 1-indexed: That is, the first worksheet on the document is at number 1 and it goes up from there. Trying to read worksheet 0 will return an error.**
+
+### `updateInterval` (optional; default `3000`)
+This is simply the interval in milliseconds at which the updater should grab the latest info from the Google Sheet. For example, if `updateInterval` is set to `3000`, the overlay will be updated every 3 seconds (3000 milliseconds).
+
+Bear in mind that it may take more than the given time for an inputted value to reach the overlay, given that it has to make the journey from writing client machine to Google Drive servers to API endpoint before it is visible to the script. For example, setting your interval to 1ms would be pointless because it takes much more than 1ms for the value to propagate to the API on Google's servers, by which time the script would have refreshed hundreds of times before getting the update. We've found that timings in the range of 2000-10000 are pretty reasonable values for this (as this is the typical time taken for Google Sheets to propagate).
