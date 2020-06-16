@@ -45,7 +45,7 @@ class GraphicsUpdater {
         const rangeText = `${this.indexToCol(cellRange[0])}${cellRange[1]}:${this.indexToCol(cellRange[2])}${cellRange[3]}`;
 
         // Generate and store the API URL to use for the rest of the program
-        this.url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetID}/values/${worksheetName}!${rangeText}?key=${apiKey}&majorDimension=COLUMNS`;
+        this.url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetID}/values/${worksheetName}!${rangeText}?key=${apiKey}&majorDimension=COLUMNS&valueRenderOption=FORMATTED_VALUE`;
 
         // Convert cell names like "A1" in the settings dictionary into x-y co-ordinate pairs
         // relative to the top left corner of the range requested from the API

@@ -3,8 +3,6 @@ This repository contains code designed to be used in a broadcast situation, and 
 
 It is designed to be included inside a set of HTML overlays to be imported into broadcasting software such as OBS, and runs entirely on the client side. An earlier version of this program was used by Rewind Gaming for all of our large events, and it has proven reliable.
 
-**Important notice:** It uses the [Google Sheets API v3](https://developers.google.com/sheets/api/v3) which is a legacy API and is unfortunately scheduled for deprecation on **30/09/2020**. I chose this API version because it can be used without authentication or API keys on public spreadsheets. I may update the program to work with a newer API at some point, but since Rewind Gaming no longer operates and I am a full-time student it won't be much of a priority for me. If anyone finds the time to implement this themselves in the mean time I would be more than happy to accept pull requests!
-
 When using this system, the main latency bottleneck is Google's servers propagating new values to the API. Generally I've found that updates take 2-10 seconds to reach overlays, which is very much satisfactory for most broadcast needs.
 
 ## Basic Implementation
@@ -18,7 +16,7 @@ For example:
     <!-- stuff -->
 </head>
 <body>
-    <p id="team-name"></p>
+    <span id="team-name"></span>
     <img id="team-photo">
 
     <!-- JAVASCRIPT STUFF -->
@@ -27,26 +25,30 @@ For example:
     <script>
         // Define settings to use
         const settings = {
-            "string": {
-                "H1": "team-name"
+            'string': {
+                'H1': 'team-name'
             },
             "image": {
-                "H2": "team-photo"
+                'H2': 'team-photo'
             }
         };
 
         // Define spreadsheet to use
-        const spreadsheetID = "0B-klwLEjaXWcZHR5SmJJWEwtYnc";
+        const spreadsheetID = '0B-klwLEjaXWcZHR5SmJJWEwtYnc';
 
-        // Use the first worksheet in the document
-        const worksheetIndex = 1;
+        // Select worksheet
+        const worksheetName = 'Sheet1';
+
+        // Specify the API key to use
+        // (this is just a random string, it won't work okay)
+        const apiKey = "4fBv9O3L9rR0SeLf6P1l5I679D08s4zP5xX4iZc";
 
         // Update the overlay every 3 seconds
         const updateInterval = 3000;
 
         // Pass those values into a new GraphicsUpdater object
         // The code will deal with it from here
-        const u = new GraphicsUpdater(settings, ssId, worksheetIndex, updateInterval);
+        const u = new GraphicsUpdater(settings, spreadsheetID, worksheetName, apiKey, updateInterval);
     </script>
 </body>
 </html>
@@ -54,16 +56,20 @@ For example:
 
 Updater.js and Updater.min.js both do exactly the same thing; Updater.min.js is just smaller ('minified') and so will take up less disk space and run marginally quicker, if you're not interested in how it works.
 
-## Parameters
+## Class Parameters
 In this section:
 
 `GraphicsUpdater(`
+
 - [`settings`](###-`settings`)`,`
 - [`spreadsheetID`](###-`spreadsheetID`)`,`
-- [`worksheetIndex`](###-`worksheetIndex`-(optional;-default-`1`))`,`
+- [`worksheetName`](###-`worksheetName`)`,`
+- [`apiKey`](###-`apiKey`)`,`
 - [`updateInterval`](###-`updateInterval`-(optional;-default-`3000`))
 
 )
+
+&nbsp;
 
 ### `settings`
 `settings` is defined as a JavaScript object. It defines the relationships between the cells in the spreadsheet and the HTML elements in the overlay.
@@ -152,15 +158,35 @@ A `settings` structure using `"switch"` might look like:
 ```
 In this example, the value in Z14 would decide which of `#bob-overlay`, `#cartoon-bucket-drawing`, `#doris-esports` and `#linda-overlay` to show. If Z14 contained 'bob', the HTML element with ID `#bob-overlay` would be shown, if it contained 'bucket' it would show `#cartoon-bucket-drawing` and so on. Note that you can't specify multiple tags for a value in a switch statement: if you want to be able to toggle several different things, you could either use containing HTML divs that you pass into the updater instead or, in a similar vein to the counter, specify the same cell multiple times. Again, not strictly supported.
 
+&nbsp;
+
 ### `spreadsheetID`
-This is the ID of the spreadsheet, as given in the URL of the Google Sheets page for that spreadsheet. It's usually a 44-character string.
+This is the [ID of the spreadsheet](https://developers.google.com/sheets/api/guides/concepts#spreadsheet_id), as given in the URL of the Google Sheets page for that spreadsheet. It's usually a long alphanumeric string.
 
-Bear in mind that the spreadsheet has to be public before it's visible to the API that the updater uses. Just setting it to 'anyone with the link can view' isn't enough - you have to **publish** it. You can do this by paying a visit to `File -> Publish to the web` on the desktop web UI, making sure that the checkbox marked `Automatically republish when changes are made` is ticked and hitting `Start publishing`.
+The system used by this updater can only access public spreadsheets, so make sure that your spreadsheet is set to at least 'Anyone with the link can view'. If it's private, the API will throw an error and your overlay won't be able to update.
 
-### `worksheetIndex` (optional; default `1`)
-This is the index of the worksheet inside the spreadsheet document (ie, a number corresponding to the tab along the bottom that you'd click to get to that worksheet in the desktop web UI).
+&nbsp;
 
-**Important: It is 1-indexed: That is, the first worksheet on the document is at number 1 and it goes up from there. Trying to read worksheet 0 will return an error.**
+### `worksheetName`
+This is the name of the worksheet inside the spreadsheet document (ie, corresponding to the tab along the bottom that you'd click to get to that worksheet in the desktop web UI). Here's a picture I found to illustrate:
+
+![Worksheet tabs along the bottom of a Google Sheets document](https://cdn-7dee.kxcdn.com/wp-content/uploads/2019/07/how-add-color-tabs-google-sheets-1.jpg)
+
+&nbsp;
+
+### `apiKey`
+This is an API key for the script to use when it accesses the Google Sheets API. You need to generate one of these with Google yourself - there's a guide for that [here](https://cloud.google.com/docs/authentication/api-keys#creating_an_api_key), or a [slightly more in-depth guide](https://developers.google.com/maps/documentation/embed/get-api-key#get-the-api-key) on the Google Maps documentation. You might have to create a new project before you can generate one.
+
+You should end up with a long string of letters, numbers and symbols. This should be passed straight into the `GraphicsUpdater`.
+
+Basically, an API key allows an application to do stuff on Google on your behalf. That means it can be abused too, so make sure that you take care to protect it. Treat it like a password. It's a good idea to restrict your key so that it can only be used on Google Sheets - there's a guide for that [here](https://cloud.google.com/docs/authentication/api-keys#api_restrictions).
+
+#### Important note:
+Google imposes usage limits on API keys: you are allowed a maximum of [100 requests per 100 seconds per user, and 500 requests per 100 seconds per project](https://developers.google.com/sheets/api/limits). As such, if you are planning to use several different overlays in the same broadcast, you may want to generate several API keys and use a different one in each overlay so that you stay well under this limit.
+
+Exceeding this limit won't break the updater, but will negatively impact the latency between a value being updated and that change being represented on the overlay. The best way to check if you are below the limits is probably to open an instance of each of your overlays, and keep an eye on the consoles for each instance. If you start consistently getting errors after a certain amount of time, you are exceeding your usage limits.
+
+&nbsp;
 
 ### `updateInterval` (optional; default `3000`)
 This is simply the interval in milliseconds at which the updater should grab the latest info from the Google Sheet. For example, if `updateInterval` is set to `3000`, the overlay will be updated every 3 seconds (3000 milliseconds).
