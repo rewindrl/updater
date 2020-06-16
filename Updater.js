@@ -1,3 +1,9 @@
+// REWIND GAMING BROADCAST OVERLAY UPDATER
+// LICENSED UNDER GPL-3.0
+
+// FOR DOCUMENTATION AND LICENSING INFORMATION PLEASE SEE:
+// https://github.com/rewindrl/updater
+
 class GraphicsUpdater {
     /**
      * Start updating given elements from the given spreadsheet
