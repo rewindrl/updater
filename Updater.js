@@ -123,31 +123,32 @@ class GraphicsUpdater {
         // Iterate over this.arrayMap, writing the received values into the overlay
         let coords, run;
         for (let type of Object.keys(this.arrayMap)) {
+            // Okay this bit is pretty meta
             // When a new type is used, check if it's a simple operation
             if (this.simpleOperations.includes(type)) {
-                // If it is a simple operation, put a proxy into the run function
+                // If it is a simple operation, put a check into the run function
                 // to iterate over IDs if they're given in an array
-                run = (f, ids, cellValue) => {
+                run = (ids, cellValue) => {
                     if (Array.isArray(ids)) {
-                        for (let i of ids) {
-                            f(i, cellValue);
+                        for (let id of ids) {
+                            this.operations[type](id, cellValue);
                         }
                     }
                     else {
-                        f(ids, cellValue)
+                        this.operations[type](ids, cellValue)
                     }
                 };
             }
             else {
                 // If it's not a simple operation, just run the given function as normal
-                run = (f, ids, cellValue) => f(ids, cellValue);
+                run = (ids, cellValue) => this.operations[type](ids, cellValue);
             }
 
             // Once the run function has been defined for the type, iterate over the cells for that type
             // and use the operations defined in this.operations to write spreadsheet values to the overlay
             for (let locationString of Object.keys(this.arrayMap[type])) {
                 coords = locationString.split(',').map(v => v.toString());
-                run(this.operations[type], this.arrayMap[type][locationString], cells[coords[0]][coords[1]]);
+                run(this.arrayMap[type][locationString], cells[coords[0]][coords[1]]);
             }
         }
     }
