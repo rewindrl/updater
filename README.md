@@ -3,7 +3,7 @@ This repository contains code designed to be used in a broadcast situation, and 
 
 It is designed to be included inside a set of HTML overlays to be imported into broadcasting software such as OBS, and runs entirely on the client side. An earlier version of this program was used by Rewind Gaming for all of our large events, and it has proven reliable.
 
-**Important notice:** It uses the [Google Sheets API v3](https://developers.google.com/sheets/api/v3) which is a legacy API and is unfortunately scheduled for deprecation on **30/09/2020**. I chose this API version because it can be used without authentication or API keys on public spreadsheets. I may update the program to work with a newer API at some point, but since Rewind Gaming no longer operates and I am a full-time student it won't be much of a priority for me. If anyone finds the time to implement this themselves in the mean time I would be more than happy to accept pull requests!
+**Important notice:** It uses the [Google Sheets API v3](https://developers.google.com/sheets/api/v3) which is a legacy API and is unfortunately scheduled for deprecation on **30/09/2020**. I chose this API version because it can be used without authentication or API keys on public spreadsheets. I am now working on an [updated version of this script for API v4](https://github.com/rewindrl/updater/tree/APIv4) - please give it a try if you can and let me know if you encounter any problems!
 
 When using this system, the main latency bottleneck is Google's servers propagating new values to the API. Generally I've found that updates take 2-10 seconds to reach overlays, which is very much satisfactory for most broadcast needs.
 
