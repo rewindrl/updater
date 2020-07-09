@@ -61,11 +61,11 @@ In this section:
 
 `GraphicsUpdater(`
 
-- [`settings`](###-`settings`)`,`
-- [`spreadsheetID`](###-`spreadsheetID`)`,`
-- [`worksheetName`](###-`worksheetName`)`,`
-- [`apiKey`](###-`apiKey`)`,`
-- [`updateInterval`](###-`updateInterval`-(optional;-default-`3000`))
+- [`settings`](#settings)`,`
+- [`spreadsheetID`](###spreadsheetID)`,`
+- [`worksheetName`](###worksheetName)`,`
+- [`apiKey`](###apiKey)`,`
+- [`updateInterval`](###updateInterval-(optional;-default-3000))
 
 )
 
