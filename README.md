@@ -58,10 +58,10 @@ Updater.js and Updater.min.js both do exactly the same thing; Updater.min.js is 
 In this section:
 
 `GraphicsUpdater(`
-- [`settings`](###-`settings`)`,`
-- [`spreadsheetID`](###-`spreadsheetID`)`,`
-- [`worksheetIndex`](###-`worksheetIndex`-(optional;-default-`1`))`,`
-- [`updateInterval`](###-`updateInterval`-(optional;-default-`3000`))
+- [`settings`](###settings)`,`
+- [`spreadsheetID`](###spreadsheetID)`,`
+- [`worksheetIndex`](###worksheetIndex-(optional;-default-1))`,`
+- [`updateInterval`](###updateInterval-(optional;-default-3000))
 
 )
 
