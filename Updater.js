@@ -1,5 +1,5 @@
 // REWIND GAMING BROADCAST OVERLAY UPDATER
-// VERSION 0.1
+// VERSION 0.2
 // LICENSED UNDER GPL-3.0
 
 // FOR DOCUMENTATION AND LICENSING INFORMATION PLEASE SEE:
@@ -13,8 +13,11 @@ class GraphicsUpdater {
      * @param {string} worksheetName - The name of the worksheet in the Google Sheets document
      * @param {string} apiKey - The Google API key to use (see https://cloud.google.com/docs/authentication/api-keys)
      * @param {number} [updateInterval=3000] - The interval to update at (in milliseconds)
+     * @param {boolean} [updateNow=true] - Whether to start updating straight away
      */
-    constructor(settings, spreadsheetID, worksheetName, apiKey, updateInterval=3000) {
+    constructor(settings, spreadsheetID, worksheetName, apiKey, updateInterval=3000, updateNow=true) {
+
+        this.updating = false;
         
         // Generate an array of all cells required (with each cell stored as ["A", "1"])
         const cellsNeeded = (() => {
@@ -69,6 +72,7 @@ class GraphicsUpdater {
         this.simpleOperations = ['string', 'image'];
 
         // Define the functions to run for each data type
+        /** {Object.<string, updaterFunction>} */
         this.operations = {
             'string': (id, cellValue) => document.getElementById(id).innerHTML = cellValue,
             'image': (id, cellValue) => document.getElementById(id).src = cellValue,
@@ -98,9 +102,12 @@ class GraphicsUpdater {
             }
         }
         
-        // Start updating the overlay
-        this.update();
-        setInterval(this.update.bind(this), updateInterval);
+        this.updateInterval = updateInterval;
+
+        if (updateNow) {
+            // Start updating the overlay
+            this.startUpdating();
+        }
     }
 
     /**
@@ -151,6 +158,54 @@ class GraphicsUpdater {
                 coords = locationString.split(',').map(v => v.toString());
                 run(this.arrayMap[type][locationString], cells[coords[0]][coords[1]]);
             }
+        }
+    }
+
+
+    /**
+     * A function which takes relevant information and uses it to update the overlay.
+     * 
+     * For example, for a simple string function:
+     * - settingsEntry would be the ID or list of IDs to update from a certain cell
+     * - cellValue would be the current value in that cell
+     * - The updaterFunction instance would write cellValue to all elements matching the ID(s) in ids
+     * 
+     * @callback updaterFunction
+     * @param {*} settingsEntry - an entry in the settings structure (usually an ID or set of IDs, but can be whatever you need)
+     * @param {string} cellValue - the value in the cell that corresponds to that entry
+     */
+
+    /**
+     * Takes a name and a function and adds it to the pool of methods of updating graphics.
+     * @param {string} name - The name to use
+     * @param {updaterFunction} operation - A function that takes the structure from settings and the current value in the relevant cell, and uses them to update the overlay.
+     * @param {boolean} [isSimple=false] - Whether the operation is 'simple': that is, whether the updater should automatically run the function for each item in an array of IDs.
+     */
+    addOperation(name, operation, isSimple=false) {
+        if (!(name in this.operations)) {
+            this.operations[name] = operation;
+            
+            if (isSimple) {
+                this.simpleOperations.push(name);
+            }
+        }
+        else {
+            throw `Failed to add operation ${name} to operation structure - it already exists! Try a different name.`;
+        }
+    }
+
+    /**
+     * Start the overlay updating with the configured values.
+     */
+    startUpdating() {
+        if (!this.updating) {
+            // Start updating the overlay
+            this.update();
+            setInterval(this.update.bind(this), this.updateInterval);
+            this.updating = true;
+        }
+        else {
+            throw `Failed to start updating: the updater is already updating!`;
         }
     }
 

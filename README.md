@@ -5,6 +5,8 @@ It is designed to be included inside a set of HTML overlays to be imported into 
 
 When using this system, the main latency bottleneck is Google's servers propagating new values to the API. Generally I've found that updates take 2-10 seconds to reach overlays, which is very much satisfactory for most broadcast needs.
 
+Note: for more advanced users, this updater is configurable with your own overlay updating operations. More information on this is available at [customisation.md](customisation.md).
+
 ## Basic Implementation
 To use Updater.js, simply import it into an overlay page in a `<script>` tag and define a new `GraphicsUpdater` object. It doesn't require JQuery so can just be included as a standalone file.
 
@@ -54,7 +56,7 @@ For example:
 </html>
 ```
 
-Updater.js and Updater.min.js both do exactly the same thing; Updater.min.js is just smaller ('minified') and so will take up less disk space and run marginally quicker, if you're not interested in how it works.
+`Updater.js` and `Updater.min.js` both do exactly the same thing; `Updater.min.js` is just smaller ('minified') and so will take up less disk space and run marginally quicker. I recommend developing with `Updater.js` because it contains [JSDoc](https://jsdoc.app/) comments which should be picked up automatically by most IDEs, and will give you information on things like parameter types. `Updater.min.js` can always be dropped in once development is completed if necessary.
 
 ## Class Parameters
 In this section:
@@ -66,6 +68,7 @@ In this section:
 - [`worksheetName`](###worksheetName)`,`
 - [`apiKey`](###apiKey)`,`
 - [`updateInterval`](###updateInterval-(optional;-default-3000))
+- [`updateNow`](###updatenow-optional-default-true)
 
 )
 
@@ -192,3 +195,10 @@ Exceeding this limit won't break the updater, but will negatively impact the lat
 This is simply the interval in milliseconds at which the updater should grab the latest info from the Google Sheet. For example, if `updateInterval` is set to `3000`, the overlay will be updated every 3 seconds (3000 milliseconds).
 
 Bear in mind that it may take more than the given time for an inputted value to reach the overlay, given that it has to make the journey from writing client machine to Google Drive servers to API endpoint before it is visible to the script. For example, setting your interval to 1ms would be pointless because it takes much more than 1ms for the value to propagate to the API on Google's servers, by which time the script would have refreshed hundreds of times before getting the update. We've found that timings in the range of 2000-10000 are pretty reasonable values for this (as this is the typical time taken for Google Sheets to propagate).
+
+&nbsp;
+
+### `updateNow` (optional; default `true`)
+This parameter specifies whether the GraphicsUpdater should start updating straight away after being initialised. It should be set to `false` if you intend to add configuration of your own.
+
+The updater can be instructed to start updating once configured by calling `GraphicsUpdater.startUpdating()`.
