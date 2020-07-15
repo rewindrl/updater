@@ -1,5 +1,5 @@
 // REWIND GAMING BROADCAST OVERLAY UPDATER
-// VERSION 0.2
+// VERSION 0.3
 // LICENSED UNDER GPL-3.0
 
 // FOR DOCUMENTATION AND LICENSING INFORMATION PLEASE SEE:
@@ -192,6 +192,10 @@ class GraphicsUpdater {
         else {
             throw `Failed to add operation ${name} to operation structure - it already exists! Try a different name.`;
         }
+    }
+
+    importPreset(operationObject) {
+        this.addOperation(...Object.values(operationObject));
     }
 
     /**
