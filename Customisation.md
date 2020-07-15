@@ -25,7 +25,7 @@ u.addOperation('string', stringOperation, true);
 u.startUpdating();
 ```
 
-If you make your own operations, please check out the (preset_operations directory)[preset_operations/] where I've written out some information on how to make importable presets for other people to use!
+If you make your own operations, please check out the [preset_operations directory](preset_operations/) where I've written out some information on how to make importable presets for other people to use!
 
 ## Parameters
 ### `name`
