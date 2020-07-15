@@ -5,7 +5,7 @@ It is designed to be included inside a set of HTML overlays to be imported into 
 
 When using this system, the main latency bottleneck is Google's servers propagating new values to the API. Generally I've found that updates take 2-10 seconds to reach overlays, which is very much satisfactory for most broadcast needs.
 
-Note: for more advanced users, this updater is configurable with your own overlay updating operations. More information on this is available at [customisation.md](customisation.md).
+Note: for more advanced users, this updater is configurable with your own overlay updating operations. More information on this is available at [Customisation.md](Customisation.md).
 
 ## Basic Implementation
 To use Updater.js, simply import it into an overlay page in a `<script>` tag and define a new `GraphicsUpdater` object. It doesn't require JQuery so can just be included as a standalone file.
