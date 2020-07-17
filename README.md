@@ -67,7 +67,7 @@ In this section:
 - [`spreadsheetID`](###spreadsheetID)`,`
 - [`worksheetName`](###worksheetName)`,`
 - [`apiKey`](###apiKey)`,`
-- [`updateInterval`](###updateInterval-(optional;-default-3000))
+- [`updateInterval`](###updateInterval-(optional;-default-3000))`,`
 - [`updateNow`](###updatenow-optional-default-true)
 
 )
