@@ -1,5 +1,5 @@
 // REWIND GAMING BROADCAST OVERLAY UPDATER
-// VERSION 0.5
+// VERSION 0.6
 // LICENSED UNDER GPL-3.0
 
 // FOR DOCUMENTATION AND LICENSING INFORMATION PLEASE SEE:
@@ -81,7 +81,7 @@ class GraphicsUpdater {
                     cellValue = parseInt(cellValue);
                 }
                 catch (error) {
-                    throw 'Failed to parse number from spreadsheet: make sure it\'s a number!';
+                    console.warn('Failed to parse counter number from spreadsheet: make sure it\'s a number!');
                 }
                 for (let i = 0; i < cellValue; i++) {
                     document.getElementById(ids[i]).style.display = '';
@@ -172,7 +172,7 @@ class GraphicsUpdater {
                     run(this.arrayMap[type][locationString], cellValue);
                 }
                 catch {
-                    throw `Failed to update ${this.arrayMap[type][locationString]}!`;
+                    console.warn(`Failed to update ${this.arrayMap[type][locationString]}!`);
                 }
             }
         }
@@ -207,10 +207,14 @@ class GraphicsUpdater {
             }
         }
         else {
-            throw `Failed to add operation ${name} to operation structure - it already exists! Try a different name.`;
+            console.warn(`Failed to add operation ${name} to operation structure - it already exists! Try a different name.`);
         }
     }
 
+    /**
+     * Imports a preset operation object
+     * @param {Object} operationObject 
+     */
     importPreset(operationObject) {
         this.addOperation(...Object.values(operationObject));
     }
@@ -226,7 +230,7 @@ class GraphicsUpdater {
             this.updating = true;
         }
         else {
-            throw `Failed to start updating: the updater is already updating!`;
+            console.warn(`Failed to start updating: the updater is already updating!`);
         }
     }
 
