@@ -1,5 +1,5 @@
 // REWIND GAMING BROADCAST OVERLAY UPDATER
-// VERSION 0.3
+// VERSION 0.4
 // LICENSED UNDER GPL-3.0
 
 // FOR DOCUMENTATION AND LICENSING INFORMATION PLEASE SEE:
@@ -156,7 +156,21 @@ class GraphicsUpdater {
             // and use the operations defined in this.operations to write spreadsheet values to the overlay
             for (let locationString of Object.keys(this.arrayMap[type])) {
                 coords = locationString.split(',').map(v => v.toString());
-                run(this.arrayMap[type][locationString], cells[coords[0]][coords[1]]);
+                
+                const cellValue = (() => {
+                    const v = cells[coords[0]][coords[1]];
+                    if (typeof v !== 'string') {
+                        return '';
+                    }
+                    return v;
+                })();
+
+                try {
+                    run(this.arrayMap[type][locationString], cellValue);
+                }
+                catch {
+                    throw `Failed to update ${this.arrayMap[type][locationString]}!`;
+                }
             }
         }
     }
