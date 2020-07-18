@@ -1,5 +1,5 @@
 // REWIND GAMING BROADCAST OVERLAY UPDATER
-// VERSION 0.4
+// VERSION 0.5
 // LICENSED UNDER GPL-3.0
 
 // FOR DOCUMENTATION AND LICENSING INFORMATION PLEASE SEE:
@@ -158,11 +158,14 @@ class GraphicsUpdater {
                 coords = locationString.split(',').map(v => v.toString());
                 
                 const cellValue = (() => {
-                    const v = cells[coords[0]][coords[1]];
-                    if (typeof v !== 'string') {
-                        return '';
+                    const col = cells[coords[0]];
+                    if (col) {
+                        const value = col[coords[1]];
+                        if (typeof value === 'string') {
+                            return col[coords[1]];
+                        }
                     }
-                    return v;
+                    return '';
                 })();
 
                 try {
