@@ -1,5 +1,7 @@
 # Updater.js
-This repository contains code designed to be used in a broadcast situation, and provides a simple framework to allow a broadcast moderator to control overlays using a Google Sheet. It was created for [Rewind Gaming](https://twitter.com/RewindRL) by [Barnaby 'bucketman' Collins](https://twitter.com/bucketman21).
+This repository contains code designed to be used in a broadcast situation, and provides a simple framework to allow a broadcast moderator to control overlays using a Google Sheet. It was created for [Rewind Gaming](https://twitter.com/RewindRL) by [Barnaby 'bucketman' Collins](https://twitter.com/bucketman21). Versions of this program have been used in overlays for tournaments including:
+
+![Rewind Gaming: The Colosseum](https://liquipedia.net/commons/images/3/3a/Colosseum_Rewind_Gaming.png) | ![Rewind Gaming: Neon Dream](https://liquipedia.net/commons/images/a/a3/Neon_Dream.png) | ![Johnnyboi_i: Salt Mine II](readme-assets/smii.jpg)
 
 It is designed to be included inside a set of HTML overlays to be imported into broadcasting software such as OBS, and runs entirely on the client side. An earlier version of this program was used by Rewind Gaming for all of our large events, and it has proven reliable.
 
@@ -70,7 +72,7 @@ In this section:
 - [`updateInterval`](###updateInterval-(optional;-default-3000))`,`
 - [`updateNow`](###updatenow-optional-default-true)
 
-)
+`)`
 
 &nbsp;
 
