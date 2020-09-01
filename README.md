@@ -184,14 +184,16 @@ This is the name of the worksheet inside the spreadsheet document (ie, correspon
 &nbsp;
 
 ### `apiKey`
-This is an API key for the script to use when it accesses the Google Sheets API. You need to generate one of these with Google yourself - there's a guide for that [here](https://cloud.google.com/docs/authentication/api-keys#creating_an_api_key), or a [slightly more in-depth guide](https://developers.google.com/maps/documentation/embed/get-api-key#get-the-api-key) on the Google Maps documentation. You might have to create a new project before you can generate one.
+This is an API key for the script to use when it accesses the Google Sheets API. You need to generate one of these with Google yourself at [this page](https://console.cloud.google.com/apis/credentials). There's more information on that [here](https://cloud.google.com/docs/authentication/api-keys#creating_an_api_key), or a [slightly more in-depth guide](https://developers.google.com/maps/documentation/embed/get-api-key#get-the-api-key) on the Google Maps documentation. You might have to create a new project before you can generate one.
 
-You should end up with a long string of letters, numbers and symbols. This should be passed straight into the `GraphicsUpdater`.
+Either way, make sure you've got the Google Sheets API enabled for the project containing your key - you can do it [here](https://console.cloud.google.com/apis/library/sheets.googleapis.com) with your project selected in the top bar.
 
-Basically, an API key allows an application to do stuff on Google on your behalf. That means it can be abused too, so make sure that you take care to protect it. Treat it like a password. It's a good idea to restrict your key so that it can only be used on Google Sheets - there's a guide for that [here](https://cloud.google.com/docs/authentication/api-keys#api_restrictions).
+You should end up with a long string of letters, numbers and symbols. This should be passed straight into the `GraphicsUpdater` as a string.
+
+Basically, an API key allows an application to do stuff on Google on your behalf. That means it can be abused too, so make sure that you take care to protect it. Treat it like a password. It's a good idea to restrict your key so that it can only be used on Google Sheets - there's a guide for that [here](https://cloud.google.com/docs/authentication/api-keys#api_key_restrictions).
 
 #### Important note:
-Google imposes usage limits on API keys: you are allowed a maximum of [100 requests per 100 seconds per user, and 500 requests per 100 seconds per project](https://developers.google.com/sheets/api/limits). As such, if you are planning to use several different overlays in the same broadcast, you may want to generate several API keys and use a different one in each overlay so that you stay well under this limit.
+Google imposes usage limits on API keys: you are allowed a maximum of [100 requests per 100 seconds per user, and 500 requests per 100 seconds per project](https://developers.google.com/sheets/api/limits). As such, if you are planning to use several different overlays in the same broadcast, you may want to generate several API keys and use a different one in each overlay so that you stay well under this limit. You can see statistics on this for your project [here](https://console.cloud.google.com/apis/dashboard).
 
 Exceeding this limit won't break the updater, but will negatively impact the latency between a value being updated and that change being represented on the overlay. The best way to check if you are below the limits is probably to open an instance of each of your overlays, and keep an eye on the consoles for each instance. If you start consistently getting errors after a certain amount of time, you are exceeding your usage limits.
 
