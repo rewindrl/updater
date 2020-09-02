@@ -13,6 +13,9 @@ When using this system, the main latency bottleneck is Google's servers propagat
 
 Note: for more advanced users, this updater is configurable with your own overlay updating operations. More information on this is available at [Customisation.md](Customisation.md).
 
+## A note on Google API versions
+This branch now contains the version of Updater.js for Google Sheets API v4. If you are looking for the previous version, which doesn't require an API key but uses a deprecated API version, that can be found on the [`APIv3` branch](https://github.com/rewindrl/updater/tree/APIv3).
+
 ## Basic Implementation
 To use Updater.js, simply import it into an overlay page in a `<script>` tag and define a new `GraphicsUpdater` object. It doesn't require JQuery so can just be included as a standalone file.
 
