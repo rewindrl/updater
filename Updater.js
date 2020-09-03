@@ -1,5 +1,5 @@
 // REWIND GAMING BROADCAST OVERLAY UPDATER
-// VERSION 1.0
+// VERSION 1.1
 // LICENSED UNDER GPL-3.0
 
 // FOR DOCUMENTATION AND LICENSING INFORMATION PLEASE SEE:
@@ -81,7 +81,7 @@ class GraphicsUpdater {
                     cellValue = parseInt(cellValue);
                 }
                 catch (error) {
-                    console.warn('Failed to parse counter number from spreadsheet: make sure it\'s a number!');
+                    console.warn(`Failed to parse counter number '${cellValue.toString()}' for ID(s) '${ids.toString}' from spreadsheet: make sure it's a number!\nReceived the following error:\n${error.toString()}`);
                 }
                 for (let i = 0; i < cellValue; i++) {
                     document.getElementById(ids[i]).style.display = '';
@@ -119,12 +119,12 @@ class GraphicsUpdater {
         try {
             let response = await fetch(this.url);
             if (!response.ok) {
-                throw 'Failed to find your spreadsheet!';
+                throw 'Failed to find your spreadsheet! Make sure it\'s public and the given ID is correct.';
             }
             cells = await response.json();
         }
         catch (error) {
-            throw 'Failed to access spreadsheet on Google Sheets API';
+            throw 'Failed to access spreadsheet on Google Sheets API! Make sure your API key is correct, and enabled on the Google Sheets API.';
         }
         cells = cells.values;
 
@@ -171,8 +171,8 @@ class GraphicsUpdater {
                 try {
                     run(this.arrayMap[type][locationString], cellValue);
                 }
-                catch {
-                    console.warn(`Failed to update ${this.arrayMap[type][locationString]}!`);
+                catch (error) {
+                    console.warn(`Failed to update ${this.arrayMap[type][locationString].toString()} with value ${cellValue.toString()}!\nReceived the following error:\n${error.toString()}`);
                 }
             }
         }
