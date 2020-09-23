@@ -1,5 +1,5 @@
 // REWIND GAMING BROADCAST OVERLAY UPDATER
-// VERSION 1.1
+// VERSION 1.2
 // LICENSED UNDER GPL-3.0
 
 // FOR DOCUMENTATION AND LICENSING INFORMATION PLEASE SEE:
@@ -77,28 +77,43 @@ class GraphicsUpdater {
             'string': (id, cellValue) => document.getElementById(id).innerHTML = cellValue,
             'image': (id, cellValue) => document.getElementById(id).src = cellValue,
             'counter': (ids, cellValue) => {
-                try {
+                // Cast falsy values (including an empty cell, represented by '') to 0
+                if (cellValue == 0) {
+                    cellValue = 0;
+                }
+                else {
+                    // If we have a truthy value, try to cast it to a number
                     cellValue = parseInt(cellValue);
+                    
+                    // If casting failed, default to 0
+                    if (cellValue === NaN) {
+                        console.warn('Failed to parse counter value from spreadsheet: make sure it\'s a number!\nDefaulting to 0.');
+                        cellValue = 0;
+                    }
                 }
-                catch (error) {
-                    console.warn(`Failed to parse counter number '${cellValue.toString()}' for ID(s) '${ids.toString}' from spreadsheet: make sure it's a number!\nReceived the following error:\n${error.toString()}`);
-                }
+                // Show the first n counter tallies
                 for (let i = 0; i < cellValue; i++) {
                     document.getElementById(ids[i]).style.display = '';
                 }
+                // Hide the rest
                 for (let i = cellValue; i < ids.length; i++) {
                     document.getElementById(ids[i]).style.display = 'none';
                 }
             },
             'switch': (valueSwitch, cellValue) => {
+                let switched = false;
+                // Iterate over the dictionary; show only the one that corresponds to the current cell value
                 for (let i of Object.keys(valueSwitch)) {
                     if (i == cellValue) {
                         document.getElementById(valueSwitch[i]).style.display = '';
+                        switched = true;
                     }
                     else {
                         document.getElementById(valueSwitch[i]).style.display = 'none';
                     }
                 }
+
+                if (!switched) console.warn(`Hid all elements in a switch: none of the keys matched cell value ${cellValue}!`)
             }
         }
         
