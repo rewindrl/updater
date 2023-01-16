@@ -1,0 +1,29 @@
+{
+  "name": "@rewindrl/updater",
+  "version": "1.3.0",
+  "description": "Rewind Gaming Overlay Updater - Control web broadcast overlays with Google Sheets",
+  "main": "Updater.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rewindrl/updater.git"
+  },
+  "keywords": [
+    "broadcast",
+    "obs",
+    "overlay",
+    "sheets"
+  ],
+  "author": "Barnaby Collins",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/rewindrl/updater/issues"
+  },
+  "homepage": "https://github.com/rewindrl/updater#readme",
+  "dependencies": {
+    "@types/node": "^18.11.18"
+  }
+}
