@@ -6,6 +6,7 @@
 // https://github.com/rewindrl/updater
 
 export type OperationType = (id: string, cellValue: string | number | Date) => any;
+export type OperationObjectType = {name: string, operation: OperationType, isSimple: boolean};
 
 export type SettingsType = { [operationName: string]: { [cellName: string]: string } };
 
@@ -287,7 +288,7 @@ class GraphicsUpdater {
      * Imports a preset operation object
      * @param {Object} operationObject 
      */
-    importPreset(operationObject: {name: string, operation: OperationType, isSimple: boolean}) {
+    importPreset(operationObject: OperationObjectType) {
         this.addOperation(operationObject.name, operationObject.operation, operationObject.isSimple);
     }
 

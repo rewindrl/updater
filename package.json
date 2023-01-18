@@ -1,12 +1,9 @@
 {
   "name": "@rewindrl/updater",
-  "version": "1.3.0",
+  "version": "1.3.1rc2",
   "description": "Rewind Gaming Overlay Updater - Control web broadcast overlays with Google Sheets",
-  "main": "Updater.js",
+  "main": "Updater.ts",
   "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rewindrl/updater.git"
